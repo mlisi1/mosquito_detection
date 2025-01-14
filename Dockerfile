@@ -2,6 +2,8 @@ FROM mmdetection:latest
 
 COPY mosquito_detection_dataset data/mosquito_detection_dataset
 
+COPY mmdet mmdet
+
 COPY configs configs
 
 ENV DISPLAY=:0

@@ -1,2 +1,2 @@
-training/** */
-mosquito_detection_dataset/**
+trainings/** 
+mosquito_detection_dataset/*
