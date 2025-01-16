@@ -1,5 +1,6 @@
 trainings/** 
 mosquito_detection_dataset/*
 combined_test/*
-dataset_organized_pre_aug/*
-conversion_test/*
+previous_work_dataset/*
+previous_work_dataset_converted/*
+unified_mosquito_dataset/*

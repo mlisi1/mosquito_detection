@@ -1,7 +1,8 @@
 FROM mmdetection:latest
 
 COPY mosquito_detection_dataset data/mosquito_detection_dataset
-COPY combined_test data/combined_test
+COPY previous_work_dataset_converted data/previous_work_dataset_converted
+COPY unified_mosquito_dataset data/unified_mosquito_dataset
 
 COPY mmdet mmdet
 COPY tools tools
@@ -24,7 +25,6 @@ RUN echo '#!/bin/bash\npython3 tools/analysis_tools/browse_dataset.py "$@"' > /u
 
 RUN echo '#!/bin/bash\npython3 tools/analysis_tools/confusion_matrix.py "$@" --show' > /usr/bin/confusion_matrix && \
     chmod +x /usr/bin/confusion_matrix
-
 
 
 ENTRYPOINT [ "/bin/bash" ]

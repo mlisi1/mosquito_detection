@@ -2,14 +2,12 @@
 
 # 1. dataset settings
 dataset_type = 'CocoDataset'
-classes = ('Aedes aegypti', 'Culex quinquefasciatus',)
+classes = ('Aedes', 'Culex',)
 data_root='data/mosquito_detection_dataset/'
 
 
-# vis_backends = [dict(type='LocalVisBackend')]
 visualizer = dict(
     type='DetLocalVisualizer',
-    # vis_backends=vis_backends,
     name='visualizer')
 
 train_pipeline = [
@@ -78,17 +76,3 @@ test_dataloader = dict(
         )
     )
 
-
-
-val_evaluator = dict(
-    type='CocoMetric',
-    ann_file=data_root + 'val/annotations.json',
-    metric='bbox',
-    format_only=False,
-)
-test_evaluator = dict(
-    type='CocoMetric',
-    ann_file=data_root + 'test/annotations.json',
-    metric='bbox',
-    format_only=False,
-)
