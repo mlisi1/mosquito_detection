@@ -1,8 +1,10 @@
 FROM mmdetection:latest
 
 COPY mosquito_detection_dataset data/mosquito_detection_dataset
+COPY combined_test data/combined_test
 
 COPY mmdet mmdet
+COPY tools tools
 
 COPY configs configs
 
