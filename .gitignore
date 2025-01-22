@@ -1,4 +1,4 @@
-trainings/** 
+trainings/
 mosquito_detection_dataset/*
 combined_test/*
 previous_work_dataset/*
