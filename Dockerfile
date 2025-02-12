@@ -24,11 +24,7 @@ RUN echo '#!/bin/bash\npython3 /mmdetection/tools/analysis_tools/confusion_matri
     chmod +x /usr/bin/confusion_matrix
 
 
-COPY mosquito_detection_dataset data/mosquito_detection_dataset
-COPY previous_work_dataset_converted data/previous_work_dataset_converted
-COPY unified_mosquito_dataset data/unified_mosquito_dataset
-
-
+COPY data data
 COPY mmdet mmdet
 COPY tools tools
 

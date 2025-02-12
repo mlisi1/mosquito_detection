@@ -1,0 +1,6 @@
+train: dataset_organized_pre_aug/train/images
+val: dataset_organized_pre_aug/val/images
+test: dataset_organized_pre_aug/test/images
+
+nc: 3  # Adjust this based on your dataset
+names: ['Aedes', 'Anopheles', 'Culex']  # Replace with your class names
