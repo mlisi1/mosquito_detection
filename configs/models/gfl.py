@@ -1,14 +1,12 @@
 _base_ = [
-    # '../atss/atss_r50_fpn_1x_coco.py',
     "../runtimes/save_best_runtime.py",
     "../datasets/unified_mosquito_dataset.py",
     "../schedules/500e_schedule_sgd.py"
 ]
 
 
-# model settings
 model = dict(
-    type='ATSS',
+    type='GFL',
     data_preprocessor=dict(
         type='DetDataPreprocessor',
         mean=[123.675, 116.28, 103.53],
@@ -33,7 +31,7 @@ model = dict(
         add_extra_convs='on_output',
         num_outs=5),
     bbox_head=dict(
-        type='ATSSHead',
+        type='GFLHead',
         num_classes=3,
         in_channels=256,
         stacked_convs=4,
@@ -44,19 +42,14 @@ model = dict(
             octave_base_scale=8,
             scales_per_octave=1,
             strides=[8, 16, 32, 64, 128]),
-        bbox_coder=dict(
-            type='DeltaXYWHBBoxCoder',
-            target_means=[.0, .0, .0, .0],
-            target_stds=[0.1, 0.1, 0.2, 0.2]),
         loss_cls=dict(
-            type='FocalLoss',
+            type='QualityFocalLoss',
             use_sigmoid=True,
-            gamma=2.0,
-            alpha=0.25,
+            beta=2.0,
             loss_weight=1.0),
-        loss_bbox=dict(type='GIoULoss', loss_weight=2.0),
-        loss_centerness=dict(
-            type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
+        loss_dfl=dict(type='DistributionFocalLoss', loss_weight=0.25),
+        reg_max=16,
+        loss_bbox=dict(type='GIoULoss', loss_weight=2.0)),
     # training and testing settings
     train_cfg=dict(
         assigner=dict(type='ATSSAssigner', topk=9),

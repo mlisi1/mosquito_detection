@@ -1,14 +1,11 @@
 _base_ = [
-    # '../atss/atss_r50_fpn_1x_coco.py',
     "../runtimes/save_best_runtime.py",
     "../datasets/unified_mosquito_dataset.py",
-    "../schedules/500e_schedule_sgd.py"
+    "../schedules/500e_schedule_sgd_grad_clipping.py"
 ]
 
-
-# model settings
 model = dict(
-    type='ATSS',
+    type='VFNet',
     data_preprocessor=dict(
         type='DetDataPreprocessor',
         mean=[123.675, 116.28, 103.53],
@@ -30,33 +27,29 @@ model = dict(
         in_channels=[256, 512, 1024, 2048],
         out_channels=256,
         start_level=1,
-        add_extra_convs='on_output',
-        num_outs=5),
+        add_extra_convs='on_output',  # use P5
+        num_outs=5,
+        relu_before_extra_convs=True),
     bbox_head=dict(
-        type='ATSSHead',
+        type='VFNetHead',
         num_classes=3,
         in_channels=256,
-        stacked_convs=4,
+        stacked_convs=3,
         feat_channels=256,
-        anchor_generator=dict(
-            type='AnchorGenerator',
-            ratios=[1.0],
-            octave_base_scale=8,
-            scales_per_octave=1,
-            strides=[8, 16, 32, 64, 128]),
-        bbox_coder=dict(
-            type='DeltaXYWHBBoxCoder',
-            target_means=[.0, .0, .0, .0],
-            target_stds=[0.1, 0.1, 0.2, 0.2]),
+        strides=[8, 16, 32, 64, 128],
+        center_sampling=False,
+        dcn_on_last_conv=False,
+        use_atss=True,
+        use_vfl=True,
         loss_cls=dict(
-            type='FocalLoss',
+            type='VarifocalLoss',
             use_sigmoid=True,
+            alpha=0.75,
             gamma=2.0,
-            alpha=0.25,
+            iou_weighted=True,
             loss_weight=1.0),
-        loss_bbox=dict(type='GIoULoss', loss_weight=2.0),
-        loss_centerness=dict(
-            type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
+        loss_bbox=dict(type='GIoULoss', loss_weight=1.5),
+        loss_bbox_refine=dict(type='GIoULoss', loss_weight=2.0)),
     # training and testing settings
     train_cfg=dict(
         assigner=dict(type='ATSSAssigner', topk=9),

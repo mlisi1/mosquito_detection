@@ -16,20 +16,17 @@ param_scheduler = [
         eta_min=0)
 ]
 
-lr_config = dict(
-    policy='step',
-    warmup=None,
-    warmup_iters=2000,
-    warmup_ratio=0.001,
-    step=[16, 22]
-)
+# lr_config = dict(
+#     policy='step',
+#     warmup=None,
+#     warmup_iters=2000,
+#     warmup_ratio=0.001,
+#     step=[16, 22]
+# )
 
-
-# optimizer
 optim_wrapper = dict(
     type='OptimWrapper',
-    optimizer=dict(type='SGD', lr=0.0000015, momentum=0.9, weight_decay=4.0e-5))
-
+    optimizer=dict(type='SGD', lr=0.0002, momentum=0.9, weight_decay=0.0001))
 custom_hooks = [
     dict(type='NumClassCheckHook'),
 ]
