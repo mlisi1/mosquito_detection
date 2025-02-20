@@ -1,4 +1,15 @@
-trainings/
+trainings/*.pth
+trainings/*.txt
+trainings/*_b16/
+trainings/*_b12/
+trainings/*/test/
+trainings/train2
+trainings/*/test_imgs/
+trainings/*/*.pth
+trainings/*/*.txt
+trainings/*/last_checkpoint
+trainings/*/*/vis_data/scalars.json
+trainings/*/*/vis_data/config.py
 classes_distribution.png
 datasets/
 net_plots/
